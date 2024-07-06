@@ -8,7 +8,7 @@ export default function Page({params}){
     <div>My slug is: {params.slug}</div>
   )
 }
-// const dataDragonUrl = 'https://ddragon.leagueoflegends.com/cdn/14.13.1/data/pt_BR';
+const dataDragonUrl = 'https://ddragon.leagueoflegends.com/cdn/14.13.1/data/pt_BR';
 
 // const ChampionData = ({name, title}) => {
 //     return (
