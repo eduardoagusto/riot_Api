@@ -36,10 +36,11 @@ const ChampionsList = () => {
   }, []);
 
   return (
-    <div className='flex justify-center min-h-screen p-4'>
-      <div className="champions-list flex flex-wrap justify-start items-center min-h-screen p-4">
+    <div className='flex flex-wrap justify-center w-4/5'>
+      <div className="champions-list flex flex-wrap justify-start min-h-screen">
         {Object.keys(champions).map(key => (
           <Champion
+            key={key}
             img={`https://ddragon.leagueoflegends.com/cdn/14.13.1/img/champion/${champions[key].id}.png`}
             name={champions[key].id}
             // title={champions[key].title}
