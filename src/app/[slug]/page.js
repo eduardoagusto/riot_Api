@@ -57,7 +57,10 @@ const ChampionData = ({ name, title, lore, skinsData, abilityData, passiveData, 
         ...abilityData.map((spell, index) => ({ identify: ['Q', 'W', 'E', 'R'][index], ...spell }))
     ];
     passiveData = {identify:'P', ...passiveData}
-
+    const changeKey = (championKey)=>{
+        return championKey.toString().padStart(4, '0');
+    }
+    console.log(changeKey(championKey))
     return (
         <div className='championData '>
             <h2>{name}</h2>
@@ -79,7 +82,7 @@ const ChampionData = ({ name, title, lore, skinsData, abilityData, passiveData, 
             </Slider>
             <div className='flex flex-row gap-20 mt-20 justify-between'>
                 <div id={passiveData.identify}>
-                    <video src={`https://d28xe8vt774jo5.cloudfront.net/champion-abilities/0${championKey}/ability_0${championKey}_${passiveData.identify}1.mp4`}muted='true' loop='true' autoplay="true" type="video/mp4"></video>
+                    <video src={`https://d28xe8vt774jo5.cloudfront.net/champion-abilities/${changeKey(championKey)}/ability_${changeKey(championKey)}_${passiveData.identify}1.mp4`}muted='true' loop='true' autoplay="true" type="video/mp4"></video>
                     <Image
                         src={`https://ddragon.leagueoflegends.com/cdn/14.13.1/img/passive/${jsonStringify(passiveData.image.full)}`}
                         alt={passiveData.name}
@@ -91,7 +94,7 @@ const ChampionData = ({ name, title, lore, skinsData, abilityData, passiveData, 
                 </div>
                 {orderedAbilities.map((ability) => (
                     <div id={ability.identify} >
-                        <video src={`https://d28xe8vt774jo5.cloudfront.net/champion-abilities/0${championKey}/ability_0${championKey}_${ability.identify}1.mp4`}muted='true' loop='true' autoplay="true" type="video/mp4"></video>
+                        <video src={`https://d28xe8vt774jo5.cloudfront.net/champion-abilities/${changeKey(championKey)}/ability_${changeKey(championKey)}_${ability.identify}1.mp4`}muted='true' loop='true' autoplay="true" type="video/mp4"></video>
                         <Image
                             src={`https://ddragon.leagueoflegends.com/cdn/14.13.1/img/spell/${ability.id}.png`}
                             alt={ability.name}
