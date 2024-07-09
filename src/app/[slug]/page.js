@@ -56,13 +56,19 @@ const ChampionData = ({ name, title, lore, skinsData, abilityData, passiveData, 
     const orderedAbilities = [
         ...abilityData.map((spell, index) => ({ identify: ['Q', 'W', 'E', 'R'][index], ...spell }))
     ];
+
+    const [hoveredAbility, setHoveredAbility] = useState(null);
+
+    const handleMouseEnterAbility = (ability) => setHoveredAbility(ability.identify);
+    const handleMouseLeaveAbility = () => setHoveredAbility(null);
+
     passiveData = {identify:'P', ...passiveData}
     const changeKey = (championKey)=>{
         return championKey.toString().padStart(4, '0');
     }
     console.log(changeKey(championKey))
     return (
-        <div className='championData '>
+        <div className='championData mb-96'>
             <h2>{name}</h2>
             <p>{title}</p>
             <p>{lore}</p>
@@ -82,25 +88,55 @@ const ChampionData = ({ name, title, lore, skinsData, abilityData, passiveData, 
             </Slider>
             <div className='flex flex-row gap-20 mt-20 justify-between'>
                 <div id={passiveData.identify}>
-                    <video src={`https://d28xe8vt774jo5.cloudfront.net/champion-abilities/${changeKey(championKey)}/ability_${changeKey(championKey)}_${passiveData.identify}1.mp4`}muted='true' loop='true' autoplay="true" type="video/mp4"></video>
                     <Image
                         src={`https://ddragon.leagueoflegends.com/cdn/14.13.1/img/passive/${jsonStringify(passiveData.image.full)}`}
                         alt={passiveData.name}
                         width={50}
                         height={50}
+                        onMouseEnter={() => handleMouseEnterAbility(passiveData)}
+                        onMouseLeave={handleMouseLeaveAbility}
                     />
+                    {hoveredAbility === passiveData.identify && (
+                        <video
+                            src={`https://d28xe8vt774jo5.cloudfront.net/champion-abilities/${changeKey(championKey)}/ability_${changeKey(championKey)}_${passiveData.identify}1.mp4`}
+                            autoPlay
+                            loop
+                            muted
+                            style={{
+                                position:'absolute',
+                                width: '20%',
+                                objectFit: 'cover',
+                                pointerEvents: 'none',
+                            }}
+                        />
+                    )}
                     <p>{passiveData.name}</p>
                     <p>{cleanText(passiveData.description)}</p>
                 </div>
                 {orderedAbilities.map((ability) => (
                     <div id={ability.identify} >
-                        <video src={`https://d28xe8vt774jo5.cloudfront.net/champion-abilities/${changeKey(championKey)}/ability_${changeKey(championKey)}_${ability.identify}1.mp4`}muted='true' loop='true' autoplay="true" type="video/mp4"></video>
-                        <Image
-                            src={`https://ddragon.leagueoflegends.com/cdn/14.13.1/img/spell/${ability.id}.png`}
-                            alt={ability.name}
-                            width={50}
-                            height={50}
-                        />
+                            <Image
+                                src={`https://ddragon.leagueoflegends.com/cdn/14.13.1/img/spell/${ability.id}.png`}
+                                alt={ability.name}
+                                width={50}
+                                height={50}
+                                onMouseEnter={() => handleMouseEnterAbility(ability)}
+                                onMouseLeave={handleMouseLeaveAbility}
+                            />
+                            {hoveredAbility === ability.identify && (
+                            <video
+                            src={`https://d28xe8vt774jo5.cloudfront.net/champion-abilities/${changeKey(championKey)}/ability_${changeKey(championKey)}_${ability.identify}1.mp4`}
+                            autoPlay
+                            loop
+                            muted
+                            style={{
+                                position:'absolute',
+                                width: '20%',
+                                objectFit: 'cover',
+                                pointerEvents: 'none',
+                            }}
+                            />
+                            )}
                         <p>{ability.name}</p>
                         <p>{cleanText(ability.description)}</p>
                         <p>{ability.cooldownBurn === '0' ? null : ability.cooldownBurn}</p>
@@ -112,7 +148,7 @@ const ChampionData = ({ name, title, lore, skinsData, abilityData, passiveData, 
     )
 }
 
-export default function Page({ params }) {
+export default function Teste({ params }) {
     const [champion, setChampion] = useState(null);
 
     const formatSlug = jsonStringify(params.slug)
